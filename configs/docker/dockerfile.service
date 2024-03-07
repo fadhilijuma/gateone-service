@@ -1,5 +1,5 @@
 # Build the Go Binary.
-FROM golang:1.22 as build_sales-api
+FROM golang:1.22 as build_gateone-api
 ENV CGO_ENABLED 0
 ARG BUILD_REF
 
@@ -24,7 +24,7 @@ FROM alpine:3.19
 ARG BUILD_DATE
 ARG BUILD_REF
 RUN addgroup -g 1000 -S gateone && \
-    adduser -u 1000 -h /service -G sales -S gateone
+    adduser -u 1000 -h /service -G gateone -S gateone
 COPY --from=build_gateone-api --chown=gateone:gateone /service/configs/keys/. /service/configs/keys/.
 COPY --from=build_gateone-api --chown=gateone:gateone /service/app/services/gateone-api/gateone-api /service/gateone-api
 WORKDIR /service

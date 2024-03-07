@@ -1,4 +1,4 @@
-// Package patient Package product provides an example of a core business API. Right now these
+// Package patient provides an example of a core business API. Right now these
 // calls are just wrapping the data/store layer. But at some point you will
 // want auditing or something that isn't specific to the data/store layer.
 package patient
@@ -37,7 +37,7 @@ type Storer interface {
 	QueryByUserID(ctx context.Context, userID uuid.UUID) ([]Patient, error)
 }
 
-// Core manages the set of APIs for product access.
+// Core manages the set of APIs for patient access.
 type Core struct {
 	log      *logger.Logger
 	usrCore  *user.Core
@@ -45,7 +45,7 @@ type Core struct {
 	storer   Storer
 }
 
-// NewCore constructs a product core API for use.
+// NewCore constructs a patient core API for use.
 func NewCore(log *logger.Logger, usrCore *user.Core, delegate *delegate.Delegate, storer Storer) *Core {
 	c := Core{
 		log:      log,
@@ -82,7 +82,7 @@ func (c *Core) ExecuteUnderTransaction(tx transaction.Transaction) (*Core, error
 	return &core, nil
 }
 
-// Create adds a new product to the system.
+// Create adds a new patient to the system.
 func (c *Core) Create(ctx context.Context, np NewPatient) (Patient, error) {
 	usr, err := c.usrCore.QueryByID(ctx, np.UserID)
 	if err != nil {
@@ -114,7 +114,7 @@ func (c *Core) Create(ctx context.Context, np NewPatient) (Patient, error) {
 	return prd, nil
 }
 
-// Update modifies information about a product.
+// Update modifies information about a patient.
 func (c *Core) Update(ctx context.Context, pn Patient, up UpdatePatient) (Patient, error) {
 	if up.Name != nil {
 		pn.Name = *up.Name

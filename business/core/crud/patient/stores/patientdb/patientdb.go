@@ -1,4 +1,4 @@
-// Package patientdb Package productdb contains product related CRUD functionality.
+// Package patientdb contains patient related CRUD functionality.
 package patientdb
 
 import (
@@ -85,7 +85,7 @@ func (s *Store) Update(ctx context.Context, prd patient.Patient) error {
 	return nil
 }
 
-// Delete removes the product identified by a given ID.
+// Delete removes the patient identified by a given ID.
 func (s *Store) Delete(ctx context.Context, prd patient.Patient) error {
 	data := struct {
 		ID string `db:"patient_id"`
@@ -163,11 +163,11 @@ func (s *Store) Count(ctx context.Context, filter patient.QueryFilter) (int, err
 }
 
 // QueryByID finds the patient identified by a given ID.
-func (s *Store) QueryByID(ctx context.Context, productID uuid.UUID) (patient.Patient, error) {
+func (s *Store) QueryByID(ctx context.Context, patientID uuid.UUID) (patient.Patient, error) {
 	data := struct {
 		ID string `db:"patient_id"`
 	}{
-		ID: productID.String(),
+		ID: patientID.String(),
 	}
 
 	const q = `
@@ -189,7 +189,7 @@ func (s *Store) QueryByID(ctx context.Context, productID uuid.UUID) (patient.Pat
 	return toCorePatient(dbPn), nil
 }
 
-// QueryByUserID finds the product identified by a given User ID.
+// QueryByUserID finds the patient identified by a given User ID.
 func (s *Store) QueryByUserID(ctx context.Context, userID uuid.UUID) ([]patient.Patient, error) {
 	data := struct {
 		ID string `db:"user_id"`

@@ -45,7 +45,7 @@ func main() {
 		return web.GetTraceID(ctx)
 	}
 
-	log = logger.NewWithEvents(os.Stdout, logger.LevelInfo, "SALES-API", traceIDFn, events)
+	log = logger.NewWithEvents(os.Stdout, logger.LevelInfo, "GATEONE-API", traceIDFn, events)
 
 	// -------------------------------------------------------------------------
 
@@ -86,7 +86,7 @@ func run(ctx context.Context, log *logger.Logger) error {
 		DB struct {
 			User         string `conf:"default:postgres"`
 			Password     string `conf:"default:postgres,mask"`
-			HostPort     string `conf:"default:database-service.sales-system.svc.cluster.local"`
+			HostPort     string `conf:"default:database-service.gateone-system.svc.cluster.local"`
 			Name         string `conf:"default:postgres"`
 			MaxIdleConns int    `conf:"default:2"`
 			MaxOpenConns int    `conf:"default:0"`
@@ -99,7 +99,7 @@ func run(ctx context.Context, log *logger.Logger) error {
 		},
 	}
 
-	const prefix = "SALES"
+	const prefix = "GATEONE"
 	help, err := conf.Parse(prefix, &cfg)
 	if err != nil {
 		if errors.Is(err, conf.ErrHelpWanted) {

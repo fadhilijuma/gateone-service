@@ -148,7 +148,7 @@ func crud(t *testing.T) {
 		t.Fatalf("Should be able to retrieve updated patient : %s", err)
 	}
 
-	// Check specified fields were updated. Make a copy of the original product
+	// Check specified fields were updated. Make a copy of the original patient
 	// and change just the fields we expect then diff it with what was saved.
 
 	var idx int
@@ -164,7 +164,7 @@ func crud(t *testing.T) {
 	saved.DateUpdated = time.Time{}
 
 	if diff := cmp.Diff(saved, patients[idx]); diff != "" {
-		t.Fatalf("Should get back the same product, dif:\n%s", diff)
+		t.Fatalf("Should get back the same patient, dif:\n%s", diff)
 	}
 
 	// -------------------------------------------------------------------------
@@ -351,7 +351,7 @@ func tran(t *testing.T) {
 
 		np := patient.NewPatient{
 			UserID:     usr.ID,
-			Name:       "test product",
+			Name:       "test patient",
 			Age:        10,
 			Condition:  "deaf",
 			VideoLinks: []string{"https://www.youtube.com/watch?v=1234"},
@@ -431,7 +431,7 @@ func tran(t *testing.T) {
 
 		np := patient.NewPatient{
 			UserID:     usr.ID,
-			Name:       "test product",
+			Name:       "test patient",
 			Age:        10,
 			Condition:  "deaf",
 			VideoLinks: []string{"https://www.youtube.com/watch?v=1234"},

@@ -10,7 +10,7 @@ import (
 
 // TestGenerateNewPatients is a helper method for testing.
 func TestGenerateNewPatients(n int, userID uuid.UUID) []NewPatient {
-	newPrds := make([]NewPatient, n)
+	newPts := make([]NewPatient, n)
 
 	idx := rand.Intn(10000)
 	for i := 0; i < n; i++ {
@@ -18,17 +18,17 @@ func TestGenerateNewPatients(n int, userID uuid.UUID) []NewPatient {
 
 		np := NewPatient{
 			UserID:     userID,
-			Name:       "test product",
+			Name:       "test patient",
 			Age:        10,
 			Condition:  "deaf",
 			VideoLinks: []string{"https://www.youtube.com/watch?v=1234"},
 			Healed:     false,
 		}
 
-		newPrds[i] = np
+		newPts[i] = np
 	}
 
-	return newPrds
+	return newPts
 }
 
 // TestGenerateSeedPatients is a helper method for testing.
