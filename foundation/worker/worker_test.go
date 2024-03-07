@@ -2,11 +2,10 @@ package worker_test
 
 import (
 	"context"
+	"github.com/fadhilijuma/gateone-service/foundation/worker"
 	"sync"
 	"testing"
 	"time"
-
-	"github.com/ardanlabs/service/foundation/worker"
 )
 
 func Test_Worker(t *testing.T) {

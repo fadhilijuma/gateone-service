@@ -2,10 +2,10 @@ package web
 
 import (
 	"context"
+	"go.opentelemetry.io/otel/attribute"
 	"net/http"
 
 	"github.com/go-json-experiment/json"
-	"go.opentelemetry.io/otel/attribute"
 )
 
 // Respond converts a Go value to JSON and sends it to the client.
