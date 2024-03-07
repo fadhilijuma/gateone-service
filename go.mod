@@ -5,7 +5,6 @@ go 1.22.0
 require (
 	github.com/ardanlabs/conf/v3 v3.1.7
 	github.com/ardanlabs/darwin/v3 v3.3.1
-	github.com/ardanlabs/service v0.0.0-20240306135526-f998b1911f72
 	github.com/arl/statsviz v0.6.0
 	github.com/go-json-experiment/json v0.0.0-20231102232822-2e55bd4e08b0
 	github.com/go-playground/locales v0.14.1

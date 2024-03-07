@@ -9,7 +9,6 @@ import (
 	"github.com/fadhilijuma/gateone-service/foundation/logger"
 	"github.com/fadhilijuma/gateone-service/foundation/web"
 	"github.com/jmoiron/sqlx"
-	"go.opentelemetry.io/otel/trace"
 	"net/http"
 	"os"
 )
@@ -34,7 +33,6 @@ type Config struct {
 	Delegate *delegate.Delegate
 	Auth     *auth.Auth
 	DB       *sqlx.DB
-	Tracer   trace.Tracer
 }
 
 // RouteAdder defines behavior that sets the routes to bind for an instance
@@ -52,7 +50,6 @@ func WebAPI(cfg Config, routeAdder RouteAdder, options ...func(opts *Options)) h
 
 	app := web.NewApp(
 		cfg.Shutdown,
-		cfg.Tracer,
 		mid.Logger(cfg.Log),
 		mid.Errors(cfg.Log),
 		mid.Metrics(),
