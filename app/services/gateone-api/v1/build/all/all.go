@@ -3,11 +3,12 @@ package all
 
 import (
 	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/handlers/checkgrp"
-	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/handlers/homegrp"
-	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/handlers/productgrp"
+	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/handlers/conditiongrp"
+	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/handlers/patientgrp"
+	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/handlers/regiongrp"
+	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/handlers/rolegrp"
 	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/handlers/trangrp"
 	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/handlers/usergrp"
-	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/handlers/vproductgrp"
 	"github.com/fadhilijuma/gateone-service/business/web/v1/mux"
 	"github.com/fadhilijuma/gateone-service/foundation/web"
 )
@@ -28,14 +29,26 @@ func (add) Add(app *web.App, cfg mux.Config) {
 		DB:    cfg.DB,
 	})
 
-	homegrp.Routes(app, homegrp.Config{
+	conditiongrp.Routes(app, conditiongrp.Config{
+		Log:      cfg.Log,
+		Delegate: cfg.Delegate,
+		Auth:     cfg.Auth,
+		DB:       cfg.DB,
+	})
+	patientgrp.Routes(app, patientgrp.Config{
 		Log:      cfg.Log,
 		Delegate: cfg.Delegate,
 		Auth:     cfg.Auth,
 		DB:       cfg.DB,
 	})
 
-	productgrp.Routes(app, productgrp.Config{
+	regiongrp.Routes(app, regiongrp.Config{
+		Log:      cfg.Log,
+		Delegate: cfg.Delegate,
+		Auth:     cfg.Auth,
+		DB:       cfg.DB,
+	})
+	rolegrp.Routes(app, rolegrp.Config{
 		Log:      cfg.Log,
 		Delegate: cfg.Delegate,
 		Auth:     cfg.Auth,
@@ -56,9 +69,4 @@ func (add) Add(app *web.App, cfg mux.Config) {
 		DB:       cfg.DB,
 	})
 
-	vproductgrp.Routes(app, vproductgrp.Config{
-		Log:  cfg.Log,
-		Auth: cfg.Auth,
-		DB:   cfg.DB,
-	})
 }

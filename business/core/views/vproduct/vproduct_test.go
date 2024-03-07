@@ -3,7 +3,7 @@ package vproduct_test
 import (
 	"context"
 	"fmt"
-	"github.com/fadhilijuma/gateone-service/business/core/crud/product"
+	"github.com/fadhilijuma/gateone-service/business/core/crud/patient"
 	"github.com/fadhilijuma/gateone-service/business/core/crud/user"
 	"github.com/fadhilijuma/gateone-service/business/core/views/vproduct"
 	"github.com/fadhilijuma/gateone-service/business/data/dbtest"
@@ -42,7 +42,7 @@ func Test_VProduct(t *testing.T) {
 }
 
 func paging(t *testing.T) {
-	seed := func(ctx context.Context, usrCore *user.Core, prdCore *product.Core) ([]product.Product, []user.User, error) {
+	seed := func(ctx context.Context, usrCore *user.Core, prdCore *patient.Core) ([]patient.Patient, []user.User, error) {
 		var filter user.QueryFilter
 		filter.WithName("Admin Gopher")
 
@@ -51,7 +51,7 @@ func paging(t *testing.T) {
 			return nil, nil, fmt.Errorf("seeding products : %w", err)
 		}
 
-		prds, err := product.TestGenerateSeedProducts(2, prdCore, usrs[0].ID)
+		prds, err := patient.TestGenerateSeedPatients(2, prdCore, usrs[0].ID)
 		if err != nil {
 			return nil, nil, fmt.Errorf("seeding products : %w", err)
 		}

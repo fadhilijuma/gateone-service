@@ -13,6 +13,7 @@ type User struct {
 	Name         string
 	Email        mail.Address
 	Roles        []Role
+	RegionID     uuid.UUID
 	PasswordHash []byte
 	Department   string
 	Enabled      bool

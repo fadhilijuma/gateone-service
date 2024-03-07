@@ -3,7 +3,6 @@ package reporting
 
 import (
 	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/handlers/checkgrp"
-	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/handlers/vproductgrp"
 	"github.com/fadhilijuma/gateone-service/business/web/v1/mux"
 	"github.com/fadhilijuma/gateone-service/foundation/web"
 )
@@ -22,11 +21,5 @@ func (add) Add(app *web.App, cfg mux.Config) {
 		Build: cfg.Build,
 		Log:   cfg.Log,
 		DB:    cfg.DB,
-	})
-
-	vproductgrp.Routes(app, vproductgrp.Config{
-		Log:  cfg.Log,
-		Auth: cfg.Auth,
-		DB:   cfg.DB,
 	})
 }

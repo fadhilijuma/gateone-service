@@ -10,9 +10,8 @@ import (
 
 // Config contains all the mandatory systems required by handlers.
 type Config struct {
-	Build string
-	Log   *logger.Logger
-	DB    *sqlx.DB
+	Log *logger.Logger
+	DB  *sqlx.DB
 }
 
 // Routes adds specific routes for this group.

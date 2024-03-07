@@ -5,15 +5,17 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/fadhilijuma/gateone-service/business/core/crud/condition"
+	"github.com/fadhilijuma/gateone-service/business/core/crud/condition/stores/conditiondb"
 	"github.com/fadhilijuma/gateone-service/business/core/crud/delegate"
-	"github.com/fadhilijuma/gateone-service/business/core/crud/home"
-	"github.com/fadhilijuma/gateone-service/business/core/crud/home/stores/homedb"
-	"github.com/fadhilijuma/gateone-service/business/core/crud/product"
-	"github.com/fadhilijuma/gateone-service/business/core/crud/product/stores/productdb"
+	"github.com/fadhilijuma/gateone-service/business/core/crud/patient"
+	"github.com/fadhilijuma/gateone-service/business/core/crud/patient/stores/patientdb"
+	"github.com/fadhilijuma/gateone-service/business/core/crud/region"
+	"github.com/fadhilijuma/gateone-service/business/core/crud/region/stores/regiondb"
+	"github.com/fadhilijuma/gateone-service/business/core/crud/role"
+	"github.com/fadhilijuma/gateone-service/business/core/crud/role/stores/roledb"
 	"github.com/fadhilijuma/gateone-service/business/core/crud/user"
 	"github.com/fadhilijuma/gateone-service/business/core/crud/user/stores/userdb"
-	"github.com/fadhilijuma/gateone-service/business/core/views/vproduct"
-	"github.com/fadhilijuma/gateone-service/business/core/views/vproduct/stores/vproductdb"
 	"github.com/fadhilijuma/gateone-service/business/data/migrate"
 	"github.com/fadhilijuma/gateone-service/business/data/sqldb"
 	"github.com/fadhilijuma/gateone-service/business/web/v1/auth"
@@ -205,6 +207,20 @@ func StringPointer(s string) *string {
 	return &s
 }
 
+// BoolPointer is a helper to get a *bool from a bool. It is in the tests
+// package because we normally don't want to deal with pointers to basic types
+// but it's useful in some tests.
+func BoolPointer(b bool) *bool {
+	return &b
+}
+
+// SliceStringPointer is a helper to get a *[]string from a []string. It is in the tests
+// package because we normally don't want to deal with pointers to basic types
+// but it's useful in some tests.
+func SliceStringPointer(s []string) *[]string {
+	return &s
+}
+
 // IntPointer is a helper to get a *int from a int. It is in the tests package
 // because we normally don't want to deal with pointers to basic types but it's
 // useful in some tests.
@@ -221,26 +237,29 @@ func FloatPointer(f float64) *float64 {
 
 // CoreAPIs represents all the core api's needed for testing.
 type CoreAPIs struct {
-	Delegate *delegate.Delegate
-	User     *user.Core
-	Product  *product.Core
-	Home     *home.Core
-	VProduct *vproduct.Core
+	Delegate  *delegate.Delegate
+	User      *user.Core
+	Patient   *patient.Core
+	Role      *role.Core
+	Condition *condition.Core
+	Region    *region.Core
 }
 
 func newCoreAPIs(log *logger.Logger, db *sqlx.DB) CoreAPIs {
-	delegate := delegate.New(log)
-	usrCore := user.NewCore(log, delegate, userdb.NewStore(log, db))
-	prdCore := product.NewCore(log, usrCore, delegate, productdb.NewStore(log, db))
-	hmeCore := home.NewCore(log, usrCore, delegate, homedb.NewStore(log, db))
-	vPrdCore := vproduct.NewCore(vproductdb.NewStore(log, db))
+	dlg := delegate.New(log)
+	usrCore := user.NewCore(log, dlg, userdb.NewStore(log, db))
+	pnCore := patient.NewCore(log, usrCore, dlg, patientdb.NewStore(log, db))
+	roleCore := role.NewCore(log, usrCore, dlg, roledb.NewStore(log, db))
+	cnCore := condition.NewCore(log, usrCore, dlg, conditiondb.NewStore(log, db))
+	rnCore := region.NewCore(log, usrCore, dlg, regiondb.NewStore(log, db))
 
 	return CoreAPIs{
-		Delegate: delegate,
-		User:     usrCore,
-		Product:  prdCore,
-		Home:     hmeCore,
-		VProduct: vPrdCore,
+		Delegate:  dlg,
+		User:      usrCore,
+		Patient:   pnCore,
+		Condition: cnCore,
+		Role:      roleCore,
+		Region:    rnCore,
 	}
 }
 

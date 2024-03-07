@@ -1,4 +1,4 @@
-package trangrp
+package regiongrp
 
 import (
 	"github.com/fadhilijuma/gateone-service/business/core/crud/delegate"
@@ -7,7 +7,6 @@ import (
 	"github.com/fadhilijuma/gateone-service/business/core/crud/user"
 	"github.com/fadhilijuma/gateone-service/business/core/crud/user/stores/usercache"
 	"github.com/fadhilijuma/gateone-service/business/core/crud/user/stores/userdb"
-	"github.com/fadhilijuma/gateone-service/business/data/sqldb"
 	"github.com/fadhilijuma/gateone-service/business/web/v1/auth"
 	"github.com/fadhilijuma/gateone-service/business/web/v1/mid"
 	"github.com/fadhilijuma/gateone-service/foundation/logger"
@@ -30,11 +29,17 @@ func Routes(app *web.App, cfg Config) {
 	const version = "v1"
 
 	usrCore := user.NewCore(cfg.Log, cfg.Delegate, usercache.NewStore(cfg.Log, userdb.NewStore(cfg.Log, cfg.DB)))
-	pnCore := patient.NewCore(cfg.Log, usrCore, cfg.Delegate, patientdb.NewStore(cfg.Log, cfg.DB))
+	prdCore := patient.NewCore(cfg.Log, usrCore, cfg.Delegate, patientdb.NewStore(cfg.Log, cfg.DB))
 
 	authen := mid.Authenticate(cfg.Auth)
-	tran := mid.ExecuteInTransaction(cfg.Log, sqldb.NewBeginner(cfg.DB))
+	ruleAny := mid.Authorize(cfg.Auth, auth.RuleAny)
+	ruleUserOnly := mid.Authorize(cfg.Auth, auth.RuleUserOnly)
+	ruleAdminOrSubject := mid.AuthorizePatient(cfg.Auth, auth.RuleAdminOrSubject, prdCore)
 
-	hdl := new(usrCore, pnCore)
-	app.Handle(http.MethodPost, version, "/tranexample", hdl.create, authen, tran)
+	hdl := new(prdCore, usrCore)
+	app.Handle(http.MethodGet, version, "/conditions", hdl.query, authen, ruleAny)
+	app.Handle(http.MethodGet, version, "/conditions/{condition_id}", hdl.queryByID, authen, ruleAdminOrSubject)
+	app.Handle(http.MethodPost, version, "/conditions", hdl.create, authen, ruleUserOnly)
+	app.Handle(http.MethodPut, version, "/conditions/{condition_id}", hdl.update, authen, ruleAdminOrSubject)
+	app.Handle(http.MethodDelete, version, "/conditions/{condition_id}", hdl.delete, authen, ruleAdminOrSubject)
 }
