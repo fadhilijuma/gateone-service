@@ -29,9 +29,9 @@ func (s *Store) applyFilter(filter patient.QueryFilter, data map[string]interfac
 		data["condition"] = *filter.Condition
 		wc = append(wc, "condition = :condition")
 	}
-	if filter.VideoLink != nil {
-		data["video_link"] = *filter.VideoLink
-		wc = append(wc, "video_link = :video_link")
+	if filter.VideoLinks != nil {
+		data["video_links"] = filter.VideoLinks
+		wc = append(wc, "video_links = :video_links")
 	}
 	if filter.Healed != nil {
 		data["healed"] = *filter.Healed

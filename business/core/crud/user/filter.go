@@ -2,10 +2,10 @@ package user
 
 import (
 	"fmt"
+	"github.com/fadhilijuma/gateone-service/foundation/validate"
 	"net/mail"
 	"time"
 
-	"github.com/ardanlabs/service/foundation/validate"
 	"github.com/google/uuid"
 )
 

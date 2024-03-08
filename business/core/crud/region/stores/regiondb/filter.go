@@ -2,7 +2,7 @@ package regiondb
 
 import (
 	"bytes"
-	"github.com/fadhilijuma/gateone-service/business/core/crud/Region"
+	"github.com/fadhilijuma/gateone-service/business/core/crud/region"
 	"strings"
 )
 

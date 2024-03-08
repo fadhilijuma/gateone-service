@@ -8,7 +8,6 @@ import (
 	"github.com/ardanlabs/conf/v3"
 	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/build/all"
 	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/build/crud"
-	"github.com/fadhilijuma/gateone-service/app/services/gateone-api/v1/build/reporting"
 	"github.com/fadhilijuma/gateone-service/business/core/crud/delegate"
 	"github.com/fadhilijuma/gateone-service/business/data/sqldb"
 	"github.com/fadhilijuma/gateone-service/business/web/v1/auth"
@@ -254,8 +253,6 @@ func buildRoutes() mux.RouteAdder {
 	case "crud":
 		return crud.Routes()
 
-	case "reporting":
-		return reporting.Routes()
 	}
 
 	return all.Routes()
