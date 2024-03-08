@@ -104,7 +104,7 @@ func (h *handlers) query(ctx context.Context, w http.ResponseWriter, r *http.Req
 	return web.Respond(ctx, w, v1.NewPageDocument(toAppPatients(prds), total, page.Number, page.RowsPerPage), http.StatusOK)
 }
 
-// queryByID returns a product by its ID.
+// queryByID returns a patient by its ID.
 func (h *handlers) queryByID(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	return web.Respond(ctx, w, toAppPatient(mid.GetPatient(ctx)), http.StatusOK)
 }
